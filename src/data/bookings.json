@@ -1,0 +1,50 @@
+[
+  {
+    "id": "BK12345",
+    "flightNumber": "CA123",
+    "airline": "China Airlines",
+    "departureCity": "Beijing",
+    "arrivalCity": "Shanghai",
+    "departureTime": "2025-06-18T08:00:00",
+    "arrivalTime": "2025-06-18T10:30:00",
+    "status": "Confirmed",
+    "price": 1200,
+    "ticketType": "Business"
+  },
+  {
+    "id": "BK67890",
+    "flightNumber": "MU510",
+    "airline": "China Eastern Airlines",
+    "departureCity": "Shanghai",
+    "arrivalCity": "Beijing",
+    "departureTime": "2025-06-20T15:00:00",
+    "arrivalTime": "2025-06-20T17:30:00",
+    "status": "Confirmed",
+    "price": 2800,
+    "ticketType": "First"
+  },
+  {
+    "id": "BK54321",
+    "flightNumber": "CA189",
+    "airline": "China Airlines",
+    "departureCity": "Beijing",
+    "arrivalCity": "Chengdu",
+    "departureTime": "2025-05-28T09:30:00",
+    "arrivalTime": "2025-05-28T12:30:00",
+    "status": "Completed",
+    "price": 900,
+    "ticketType": "Premium Economy"
+  },
+  {
+    "id": "BK98765",
+    "flightNumber": "CZ345",
+    "airline": "China Southern Airlines",
+    "departureCity": "Guangzhou",
+    "arrivalCity": "Shenzhen",
+    "departureTime": "2025-05-15T14:00:00",
+    "arrivalTime": "2025-05-15T14:45:00",
+    "status": "Cancelled",
+    "price": 200,
+    "ticketType": "Economy"
+  }
+]    

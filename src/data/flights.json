@@ -1,0 +1,132 @@
+[
+  {
+    "id": "CA123",
+    "flightNumber": "CA123",
+    "airline": "China Airlines",
+    "departureCity": "Beijing",
+    "arrivalCity": "Shanghai",
+    "departureTime": "2025-06-17T08:00:00",
+    "arrivalTime": "2025-06-17T10:30:00",
+    "duration": "2h 30m",
+    "aircraft": "Boeing 737-800",
+    "pricing": [
+      {
+        "type": "Economy",
+        "price": 500,
+        "description": "Standard economy class with basic amenities"
+      },
+      {
+        "type": "Business",
+        "price": 1200,
+        "description": "Business class with extra legroom and premium service"
+      },
+      {
+        "type": "First",
+        "price": 2500,
+        "description": "First class with full flat bed and luxury amenities"
+      }
+    ]
+  },
+  {
+    "id": "MU256",
+    "flightNumber": "MU256",
+    "airline": "China Eastern Airlines",
+    "departureCity": "Shanghai",
+    "arrivalCity": "Guangzhou",
+    "departureTime": "2025-06-17T11:00:00",
+    "arrivalTime": "2025-06-17T13:30:00",
+    "duration": "2h 30m",
+    "aircraft": "Airbus A320",
+    "pricing": [
+      {
+        "type": "Economy",
+        "price": 450,
+        "description": "Standard economy class with basic amenities"
+      },
+      {
+        "type": "Business",
+        "price": 1100,
+        "description": "Business class with extra legroom and premium service"
+      }
+    ]
+  },
+  {
+    "id": "CZ345",
+    "flightNumber": "CZ345",
+    "airline": "China Southern Airlines",
+    "departureCity": "Guangzhou",
+    "arrivalCity": "Shenzhen",
+    "departureTime": "2025-06-17T14:00:00",
+    "arrivalTime": "2025-06-17T14:45:00",
+    "duration": "45m",
+    "aircraft": "Boeing 737-700",
+    "pricing": [
+      {
+        "type": "Economy",
+        "price": 200,
+        "description": "Standard economy class with basic amenities"
+      },
+      {
+        "type": "Business",
+        "price": 500,
+        "description": "Business class with extra legroom and premium service"
+      }
+    ]
+  },
+  {
+    "id": "CA189",
+    "flightNumber": "CA189",
+    "airline": "China Airlines",
+    "departureCity": "Beijing",
+    "arrivalCity": "Chengdu",
+    "departureTime": "2025-06-17T09:30:00",
+    "arrivalTime": "2025-06-17T12:30:00",
+    "duration": "3h",
+    "aircraft": "Boeing 787-9",
+    "pricing": [
+      {
+        "type": "Economy",
+        "price": 600,
+        "description": "Standard economy class with basic amenities"
+      },
+      {
+        "type": "Premium Economy",
+        "price": 900,
+        "description": "Upgraded economy with extra legroom and amenities"
+      },
+      {
+        "type": "Business",
+        "price": 1800,
+        "description": "Business class with flat bed and premium service"
+      }
+    ]
+  },
+  {
+    "id": "MU510",
+    "flightNumber": "MU510",
+    "airline": "China Eastern Airlines",
+    "departureCity": "Shanghai",
+    "arrivalCity": "Beijing",
+    "departureTime": "2025-06-17T15:00:00",
+    "arrivalTime": "2025-06-17T17:30:00",
+    "duration": "2h 30m",
+    "aircraft": "Airbus A330-300",
+    "pricing": [
+      {
+        "type": "Economy",
+        "price": 550,
+        "description": "Standard economy class with basic amenities"
+      },
+      {
+        "type": "Business",
+        "price": 1300,
+        "description": "Business class with extra legroom and premium service"
+      },
+      {
+        "type": "First",
+        "price": 2800,
+        "description": "First class with full flat bed and luxury amenities"
+      }
+    ]
+  }
+]    
