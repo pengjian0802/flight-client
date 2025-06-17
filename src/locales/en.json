@@ -11,6 +11,13 @@
     "yes": "Yes",
     "no": "No"
   },
+  "city": {
+    "Beijing": "Beijing",
+    "Shanghai": "Shanghai",
+    "Guangzhou": "Guangzhou",
+    "Shenzhen": "Shenzhen",
+    "Chengdu": "Chengdu"
+  },
   "navbar": {
     "home": "Home",
     "flights": "Flights",
@@ -35,10 +42,12 @@
     "pleaseSelectDate": "Please select departure date",
     "searchResults": "Search Results",
     "noFlightsFound": "No flights found",
+    "select": "Select",
     "tryAdjustingYourSearch": "Try adjusting your search criteria"
   },
   "login": {
     "login": "Login",
+    "title": "Login",
     "username": "Username",
     "email": "Email",
     "password": "Password",

@@ -16,3 +16,10 @@ export interface PricingOption {
   price: number;
   description: string;
 }    
+
+export interface QueryFlightListRequest {
+  departureCity: string;
+  arrivalCity: string;
+  departureDate: string;
+  passengers: number;
+}
