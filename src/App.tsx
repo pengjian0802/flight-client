@@ -15,7 +15,7 @@ const { Header, Content, Footer: LayoutFooter } = Layout;
 const App: React.FC = () => {
   return (
     <Layout className="min-h-screen flex flex-col"> 
-      <Header className="bg-white shadow-md sticky top-0 z-50 py-2 px-4 sm:px-6 lg:px-8" style={{ background: '#ffffff' }}>
+      <Header className="bg-white shadow-md sticky top-0 z-50 px-4 sm:px-6 lg:px-8" style={{ background: '#ffffff' }}>
         <Navbar />
       </Header>
       <Content className="flex-grow"> 

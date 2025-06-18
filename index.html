@@ -5,6 +5,77 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AirBook - 航空订票平台</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#2563eb',
+              secondary: '#4f46e5',
+              accent: '#3b82f6',
+              success: '#10b981',
+              danger: '#ef4444',
+              dark: '#1e293b',
+              light: '#f8fafc'
+            },
+            fontFamily: {
+              inter: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        }
+      }
+    </script>
+
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .pulse-ring {
+          box-shadow: 0 0 0 rgba(239, 68, 68, 0.4);
+          animation: pulse-ring 2s infinite;
+        }
+        .animate-wave {
+          animation: wave 1.2s linear infinite;
+        }
+        .blur-backdrop {
+          backdrop-filter: blur(8px);
+        }
+      }
+
+      @keyframes pulse-ring {
+        0% {
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+        }
+      }
+
+      @keyframes wave {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+        }
+
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        }
+
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+      }
+    </style>
+    
   </head>
   <body>
     <div id="root"></div>

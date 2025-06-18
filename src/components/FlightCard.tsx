@@ -50,10 +50,10 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
             </Col>
             <Col span={6}>
               <div className="flex justify-between">
-                {flight.pricing.slice(0, 2).map((price, index) => (
+                {flight.seats.slice(0, 2).map((seat, index) => (
                   <div key={index} className="text-center">
-                    <Tag>{price.type}</Tag>
-                    <div className="text-lg font-bold">{price.price} {t('common.currency')}</div>
+                    <Tag>{seat.seatType}</Tag>
+                    <div className="text-lg font-bold">{seat.price} {t('common.currency')}</div>
                   </div>
                 ))}
               </div>

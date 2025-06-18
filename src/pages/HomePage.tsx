@@ -29,8 +29,8 @@ const HomePage: React.FC = () => {
 
   const loadFlights = async (queryParams: QueryFlightListRequest) => {
     const response = await flightApi.queryFlights(queryParams);
-    setSearchResults(response.data.data || []);
-    // setSearchResults(flights);
+    setSearchResults(response.data || []);
+    setSearchPerformed(true);
   }
 
   const onFinish = async (values: any) => {

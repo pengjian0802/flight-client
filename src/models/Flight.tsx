@@ -3,18 +3,23 @@ export interface Flight {
   flightNumber: string;
   airline: string;
   departureCity: string;
+  departureAirport: string;
   arrivalCity: string;
+  arrivalAirport: string;
   departureTime: string;
   arrivalTime: string;
   duration: string;
+  availableSeats: number;
   aircraft: string;
-  pricing: PricingOption[];
+  seats: FlightSeat[];
 }
 
-export interface PricingOption {
-  type: string;
+export interface FlightSeat {
+  id: string;
+  seatType: string;
+  seatNumber: string;
   price: number;
-  description: string;
+  isAvailable: boolean;
 }    
 
 export interface QueryFlightListRequest {

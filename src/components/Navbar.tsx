@@ -44,18 +44,6 @@ const Navbar: React.FC = () => {
       ),
     },
     {
-      key: 'bookings',
-      label: (
-        <Button
-          type="link"
-          onClick={() => navigate('/my-bookings')}
-          className={COMMON_ITEM_CLASS}
-        >
-          {t('navbar.myBookings')}
-        </Button>
-      ),
-    },
-    {
       type: 'divider',
       key: 'divider',
     },
@@ -95,22 +83,12 @@ const Navbar: React.FC = () => {
       key: 'home',
       label: createMainMenuLabel(<GlobalOutlined />, t('navbar.home')),
     },
-    {
-      key: 'flights',
-      label: createMainMenuLabel(<RocketOutlined />, t('navbar.flights')),
-    },
-    {
-      key: 'destinations',
-      label: createMainMenuLabel(<GlobalOutlined />, t('navbar.destinations')),
-    },
-    {
-      key: 'offers',
-      label: createMainMenuLabel(<GlobalOutlined />, t('navbar.offers')),
-    },
-    {
-      key: 'support',
-      label: createMainMenuLabel(<GlobalOutlined />, t('navbar.support')),
-    },
+    ...(isLoggedIn ? [
+      {
+        key: 'my-bookings',
+        label: createMainMenuLabel(<RocketOutlined />, t('navbar.myBookings')),
+      },
+    ] : []),
     {
       key: 'language',
       label: (
