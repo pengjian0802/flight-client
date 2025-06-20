@@ -1,5 +1,5 @@
 # 使用官方 Node.js 运行时作为基础镜像
-FROM node:18-alpine as build
+FROM node:22.16.0 as build
 
 # 设置工作目录
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN ls -l node_modules/typescript/bin
 RUN npm run build
 
 # 使用轻量级的 Node.js 运行时镜像
-FROM node:18-alpine
+FROM node:22.16.0-slim
 
 # 设置工作目录
 WORKDIR /app
