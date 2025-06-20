@@ -13,11 +13,8 @@ RUN npm install
 # 复制项目文件
 COPY . .
 
-# 确保所有二进制文件可执行
-RUN chmod -R +x /app/node_modules/.bin
-
-# 构建应用（使用 npx 执行所有本地命令）
-RUN npx tsc -b && npx vite build
+# 构建应用（使用完整路径执行本地命令）
+RUN /app/node_modules/.bin/tsc -b && /app/node_modules/.bin/vite build
 
 # 使用轻量级的 Node.js 运行时镜像
 FROM node:18-alpine
