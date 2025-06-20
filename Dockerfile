@@ -16,7 +16,7 @@ COPY . .
 # 查看项目文件
 RUN whoami
 RUN ls -l
-RUN ls -l node_modules/.bin/
+# RUN ls -l node_modules/.bin/
 
 # 构建应用
 RUN npm run build
