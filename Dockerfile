@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # 以根用户身份安装依赖
-RUN npm install
+RUN sudo npm install
 
 # 复制项目文件
 COPY . .
@@ -19,7 +19,7 @@ RUN ls -l
 RUN ls -l node_modules/.bin/
 
 # 构建应用
-RUN npm run build
+RUN sudo npm run build
 
 # 使用轻量级的 Node.js 运行时镜像
 FROM node:18-alpine
