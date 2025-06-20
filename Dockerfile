@@ -13,15 +13,13 @@ RUN npm install
 # 复制项目文件
 COPY . .
 
-# 查看项目文件
-RUN whoami
-RUN ls -l
-RUN ls -l node_modules/.bin/
-RUN ls -l node_modules/typescript/bin
-
+# 赋权
 RUN chmod +x node_modules/typescript/bin/tsc
+RUN chmod +x node_modules/vite/bin/vite.js
 
+# 查看权限
 RUN ls -l node_modules/typescript/bin
+RUN ls -l node_modules/vite/bin
 
 # 构建应用
 RUN npm run build
