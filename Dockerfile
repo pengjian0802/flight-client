@@ -34,6 +34,11 @@ WORKDIR /app
 # 仅复制构建产物
 COPY --from=build /app/dist ./dist
 
+# 赋权
+RUN chmod +x ./dist/node_modules/typescript/bin/tsc
+RUN chmod +x ./dist/node_modules/vite/bin/vite.js
+RUN chmod +x ./dist/node_modules/@esbuild/linux-x64/bin/esbuild
+
 # 安装生产环境依赖（如果需要运行时依赖）
 COPY package*.json ./
 RUN npm install --production
