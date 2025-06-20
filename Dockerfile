@@ -13,8 +13,11 @@ RUN npm install
 # 复制项目文件
 COPY . .
 
-# 构建应用
-RUN npm run build
+# 确保 TypeScript 命令可执行
+RUN chmod +x /app/node_modules/.bin/tsc
+
+# 构建应用（使用 npx 执行本地 tsc）
+RUN npx tsc -b && vite build
 
 # 使用轻量级的 Node.js 运行时镜像
 FROM node:18-alpine
@@ -31,6 +34,10 @@ RUN npm install --production
 
 # 暴露应用端口
 EXPOSE 3000
+
+# 添加健康检查
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/ || exit 1
 
 # 启动应用
 CMD ["npm", "run", "preview"]
