@@ -16,7 +16,7 @@ COPY . .
 # 赋权
 RUN chmod +x node_modules/typescript/bin/tsc
 RUN chmod +x node_modules/vite/bin/vite.js
-RUN chmod +x node_modules/esbuild/bin/esbuild
+RUN chmod +x node_modules/@esbuild/linux-x64/bin/esbuild
 
 # 查看权限
 RUN ls -l node_modules/typescript/bin
