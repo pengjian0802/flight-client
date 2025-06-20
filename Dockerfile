@@ -14,8 +14,9 @@ RUN npm install
 COPY . .
 
 # 赋权
-RUN chmod +x node_modules/typescript/bin/tsc
-RUN chmod +x node_modules/vite/bin/vite.js
+# RUN chmod +x node_modules/typescript/bin/tsc
+# RUN chmod +x node_modules/vite/bin/vite.js
+RUN find /app/node_modules -type f -executable -exec chmod +x {}
 
 # 查看权限
 RUN ls -l node_modules/typescript/bin
