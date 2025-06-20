@@ -10,8 +10,7 @@ env:
   ECR_REPOSITORY: jianpeng/flight-client     # ECR 仓库名称
   ECS_SERVICE: pengjian-flight-client-service     # ECS 服务名称
   ECS_CLUSTER: pengjian-flight-client-cluster     # ECS 集群名称
-  ECS_TASK_DEFINITION: task-definition.json  # 任务定义文件路径
-  IMAGE_URI: jianpeng/flight-client:latest
+  IMAGE_URI: 381492153714.dkr.ecr.us-east-1.amazonaws.com/jianpeng/flight-client:latest
   CONTAINER_NAME: flight-client-container    # 容器名称
 
 jobs:
