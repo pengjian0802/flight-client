@@ -11,8 +11,8 @@
           "protocol": "tcp"
         }
       ],
-      "memory": 2048,
-      "cpu": 4096,
+      "memory": 4096,
+      "cpu": 2048,
       "essential": true
     }
   ],
