@@ -17,6 +17,7 @@ COPY . .
 RUN whoami
 RUN ls -l
 RUN ls -l node_modules/.bin/
+RUN ls -l node_modules/typescript/bin
 
 # 构建应用
 RUN npm run build
