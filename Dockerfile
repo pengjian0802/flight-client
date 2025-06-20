@@ -7,19 +7,19 @@ WORKDIR /app
 # 复制 package.json 和 package-lock.json
 COPY package*.json ./
 
-# 以根用户身份安装依赖
-RUN sudo npm install
+# 安装依赖
+RUN npm install -g
 
 # 复制项目文件
 COPY . .
 
 # 查看项目文件
+RUN whoami
 RUN ls -l
-
 RUN ls -l node_modules/.bin/
 
 # 构建应用
-RUN sudo npm run build
+RUN npm run build
 
 # 使用轻量级的 Node.js 运行时镜像
 FROM node:18-alpine
