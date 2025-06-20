@@ -1,26 +1,45 @@
 {
-  "family": "flight-client-task-definition",
-  "containerDefinitions": [
-    {
-      "name": "flight-client-container",
-      "image": "381492153714.dkr.ecr.us-east-1.amazonaws.com/jianpeng/flight-client:latest",
-      "portMappings": [
+    "family": "flight-client-task-definition",
+    "containerDefinitions": [
         {
-          "containerPort": 3000,
-          "hostPort": 3000,
-          "protocol": "tcp"
+            "name": "flight-client-container",
+            "image": "381492153714.dkr.ecr.us-east-1.amazonaws.com/jianpeng/flight-client:latest",
+            "cpu": 2048,
+            "memory": 4096,
+            "portMappings": [
+                {
+                    "name": "flight-client-container-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/flight-client-task-definition",
+                    "mode": "non-blocking",
+                    "awslogs-create-group": "true",
+                    "max-buffer-size": "25m",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
         }
-      ],
-      "memory": 4096,
-      "cpu": 2048,
-      "essential": true
-    }
-  ],
-  "requiresCompatibilities": [
-    "FARGATE"
-  ],
-  "networkMode": "awsvpc",
-  "cpu": "2048",
-  "memory": "4096",
-  "executionRoleArn": "arn:aws:iam::381492153714:role/ecsTaskExecutionRole"
-}    
+    ],
+    "executionRoleArn": "arn:aws:iam::381492153714:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "2048",
+    "memory": "4096"
+}
