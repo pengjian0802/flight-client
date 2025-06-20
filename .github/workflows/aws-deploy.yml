@@ -34,8 +34,11 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          
+      - name: Setup Dependence
+        run: npm install
 
-      - name: Setup App
+      - name: Build App
         run: npm run build
         env:
           CI: true
