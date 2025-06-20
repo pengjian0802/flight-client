@@ -7,17 +7,17 @@ WORKDIR /app
 # 复制 package.json 和 package-lock.json
 COPY package*.json ./
 
-# 安装依赖
+# 安装所有依赖（包括开发依赖）
 RUN npm install
 
 # 复制项目文件
 COPY . .
 
-# 确保 TypeScript 命令可执行
-RUN chmod +x /app/node_modules/.bin/tsc
+# 确保所有二进制文件可执行
+RUN chmod -R +x /app/node_modules/.bin
 
-# 构建应用（使用 npx 执行本地 tsc）
-RUN npx tsc -b && vite build
+# 构建应用（使用 npx 执行所有本地命令）
+RUN npx tsc -b && npx vite build
 
 # 使用轻量级的 Node.js 运行时镜像
 FROM node:18-alpine
@@ -28,7 +28,7 @@ WORKDIR /app
 # 仅复制构建产物
 COPY --from=build /app/dist ./dist
 
-# 安装生产环境依赖（如果需要运行时依赖）
+# 安装生产环境依赖
 COPY package*.json ./
 RUN npm install --production
 
