@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, DatePicker, Form, Row, Select, Button, Result, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import flights from '../data/flights.json';
+// import flights from '../data/flights.json';
 import FlightCard from '../components/FlightCard';
 import type { Flight } from '../models/Flight';
 import dayjs from 'dayjs'; 
 import flightApi from '../services/flightApi';
-import type { ApiResponse } from '../models/Common';
 import type { QueryFlightListRequest } from '../models/Flight';
 
 // const { RangePicker } = DatePicker;
@@ -38,20 +37,9 @@ const HomePage: React.FC = () => {
     await loadFlights({
       departureCity: values.from,
       arrivalCity: values.to,
-      departureDate: dayjs(values.dates[0]).format('YYYY-MM-DD'),
+      departureDate: dayjs(values.dates).format('YYYY-MM-DD'),
       passengers: values.passengers,
     });
-    // const results = flights.filter(flight => {
-    //   return (
-    //     flight.departureCity === values.from &&
-    //     flight.arrivalCity === values.to &&
-    //     (values.dates ? 
-    //       new Date(flight.departureTime).toDateString() === new Date(values.dates[0]).toDateString() : 
-    //       true)
-    //   );
-    // });
-
-    // setSearchResults(results);
     setSearchPerformed(true);
   };
   
@@ -72,7 +60,6 @@ const HomePage: React.FC = () => {
               <Form.Item
                 label={t('home.from')}
                 name="from"
-                rules={[{ required: true, message: t('home.pleaseSelectDeparture') }]}
               >
                 <Select placeholder={t('home.selectCity')}>
                   <Option value="Beijing">Beijing</Option>
@@ -87,7 +74,6 @@ const HomePage: React.FC = () => {
               <Form.Item
                 label={t('home.to')}
                 name="to"
-                rules={[{ required: true, message: t('home.pleaseSelectDestination') }]}
               >
                 <Select placeholder={t('home.selectCity')}>
                   <Option value="Beijing">{t('city.Beijing')}</Option>
@@ -102,7 +88,6 @@ const HomePage: React.FC = () => {
               <Form.Item
                 label={t('home.departureDate')}
                 name="dates"
-                rules={[{ required: true, message: t('home.pleaseSelectDate') }]}
               >
                 <DatePicker
                   format="YYYY-MM-DD"

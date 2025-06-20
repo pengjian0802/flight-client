@@ -56,6 +56,7 @@ const Navbar: React.FC = () => {
           onClick={() => {
             localStorage.setItem('isLoggedIn', 'false');
             localStorage.removeItem('token');
+            localStorage.removeItem('userId');
             navigate('/login');
           }}
           className={COMMON_ITEM_CLASS}
@@ -105,7 +106,7 @@ const Navbar: React.FC = () => {
     },
     ...(isLoggedIn ? [
       {
-        key: 'user',
+        key: '',
         label: (
           <Dropdown menu={userMenu} trigger={['click']}>
             <Button type="link">

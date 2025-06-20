@@ -1,5 +1,21 @@
 export interface Flight {
-  id: string;
+  id: number;
+  flightNumber: string;
+  airline: string;
+  departureCity: string;
+  departureAirport: string;
+  arrivalCity: string;
+  arrivalAirport: string;
+  departureTime: string;
+  arrivalTime: string;
+  duration: string;
+  availableSeats: number;
+  aircraft: string;
+  priceMap: Record<string, number>;
+}
+
+export interface FlightDetail {
+  id: number;
   flightNumber: string;
   airline: string;
   departureCity: string;
@@ -15,7 +31,7 @@ export interface Flight {
 }
 
 export interface FlightSeat {
-  id: string;
+  id: number;
   seatType: string;
   seatNumber: string;
   price: number;

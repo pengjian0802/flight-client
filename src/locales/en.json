@@ -98,8 +98,9 @@
     "flightRoute": "Flight Route",
     "select": "Select",
     "nonStop": "Non-stop",
-    "economy": "Basic amenities",
-    "business": "Extra legroom",
+    "economy": "Basic Amenities",
+    "business": "Extra Legroom",
+    "first_class": "First Class",
     "first": "Full flat bed"
   },
   "booking": {
@@ -136,6 +137,9 @@
     "ticketType": "Ticket Type",
     "price": "Price",
     "total": "Total",
+    "addNewPayCard": "Add New PayCard",
+    "selectPayCard": "Select PayCard",
+    "cardHolderName": "Card Holder Name",
     "confirmBooking": "Confirm Booking"
   },
   "myBookings": {
@@ -178,5 +182,12 @@
     "copyright": "Copyright",
     "airline": "Airline Booking Platform",
     "allRights": "All rights reserved"
+  },
+  "error": {
+    "403": {
+      "title": "403 Forbidden",
+      "message": "No Permission",
+      "goHome": "Return Home"
+    }
   }
 }    

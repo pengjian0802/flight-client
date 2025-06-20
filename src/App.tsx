@@ -8,9 +8,10 @@ import FlightDetailPage from './pages/FlightDetailPage';
 import BookingPage from './pages/BookingPage';
 import MyBookingPage from './pages/MyBookingPage';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
+import Page403 from './pages/Page403';
 
-const { Header, Content, Footer: LayoutFooter } = Layout;
+const { Header, Content} = Layout;
 
 const App: React.FC = () => {
   return (
@@ -25,8 +26,9 @@ const App: React.FC = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/flights/:id" element={<FlightDetailPage />} />
-            <Route path="/booking/:id" element={<BookingPage />} />
+            <Route path="/booking/:flightId/:seatId" element={<BookingPage />} />
             <Route path="/my-bookings" element={<MyBookingPage />} />
+            <Route path='/403' element={<Page403 />} />
           </Routes>
         </div>
       </Content>

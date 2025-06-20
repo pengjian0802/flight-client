@@ -3,23 +3,31 @@ import { useParams } from 'react-router-dom';
 import { Button, Card, Col, Divider, Row, Space, Tag, Typography } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import flights from '../data/flights.json';
-import type { Flight } from '../models/Flight';
+// import flights from '../data/flights.json';
+import type { FlightDetail } from '../models/Flight';
+import flightApi from '../services/flightApi';
 
 const { Title, Text } = Typography;
 
 const FlightDetailPage: React.FC = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const [flight, setFlight] = useState<Flight | null>(null);
+  const [flightDetail, setFlightDetail] = useState<FlightDetail | null>(null);
+
+  const loadFlightDetail = async () => {
+    if (!id) {
+      return;
+    }
+    const response = await flightApi.queryFlightDetail(id);
+    setFlightDetail(response.data || null);
+  }
 
   useEffect(() => {
-    const selectedFlight = flights.find(f => f.id === id);
-    setFlight(selectedFlight || null);
+    loadFlightDetail();
   }, [id]);
 
-  if (!flight) {
-    return <div>{t('flightDetail.flightNotFound')}</div>;
+  if (!flightDetail) {
+    return <div></div>;
   }
 
   return (
@@ -32,30 +40,30 @@ const FlightDetailPage: React.FC = () => {
             </Title>
             <Row gutter={16}>
               <Col span={12}>
-                <Text strong>{t('flightDetail.flightNumber')}:</Text> {flight.flightNumber}
+                <Text strong>{t('flightDetail.flightNumber')}:</Text> {flightDetail.flightNumber}
               </Col>
               <Col span={12}>
-                <Text strong>{t('flightDetail.airline')}:</Text> {flight.airline}
+                <Text strong>{t('flightDetail.airline')}:</Text> {flightDetail.airline}
               </Col>
               <Col span={12}>
-                <Text strong>{t('flightDetail.departure')}:</Text> {flight.departureCity}
+                <Text strong>{t('flightDetail.departure')}:</Text> {flightDetail.departureCity}
               </Col>
               <Col span={12}>
-                <Text strong>{t('flightDetail.arrival')}:</Text> {flight.arrivalCity}
+                <Text strong>{t('flightDetail.arrival')}:</Text> {flightDetail.arrivalCity}
               </Col>
               <Col span={12}>
                 <Text strong>{t('flightDetail.departureTime')}:</Text>{' '}
-                {new Date(flight.departureTime).toLocaleString()}
+                {new Date(flightDetail.departureTime).toLocaleString()}
               </Col>
               <Col span={12}>
                 <Text strong>{t('flightDetail.arrivalTime')}:</Text>{' '}
-                {new Date(flight.arrivalTime).toLocaleString()}
+                {new Date(flightDetail.arrivalTime).toLocaleString()}
               </Col>
               <Col span={12}>
-                <Text strong>{t('flightDetail.duration')}:</Text> {flight.duration}
+                <Text strong>{t('flightDetail.duration')}:</Text> {flightDetail.duration}
               </Col>
               <Col span={12}>
-                <Text strong>{t('flightDetail.aircraft')}:</Text> {flight.aircraft}
+                <Text strong>{t('flightDetail.aircraft')}:</Text> {flightDetail.aircraft}
               </Col>
             </Row>
           </Col>
@@ -67,26 +75,26 @@ const FlightDetailPage: React.FC = () => {
           {t('flightDetail.priceOptions')}
         </Title>
         <Space direction="vertical" size="large" className="w-full">
-          {flight.pricing.map((price, index) => (
+          {flightDetail.seats.map((flightSeat, index) => (
             <div key={index} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
               <Row>
                 <Col span={18}>
                   <Row>
                     <Col span={24}>
-                      <Text strong className="text-lg">{price.type}</Text>
-                      <Tag className="ml-2">{t(`flightDetail.${price.type.toLowerCase()}`)}</Tag>
+                      <Text strong className="text-lg">{flightSeat.seatType}</Text>
+                      <Tag className="ml-2">{t(`flightDetail.${flightSeat.seatType.toLowerCase()}`)}</Tag>
                     </Col>
                     <Col span={24} className="mt-2">
-                      <Text>{price.description}</Text>
+                      <Text>{flightSeat.seatNumber}</Text>
                     </Col>
                   </Row>
                 </Col>
                 <Col span={6} className="text-right">
-                  <Text strong className="text-xl">{price.price} {t('common.currency')}</Text>
+                  <Text strong className="text-xl">{flightSeat.price} {t('common.currency')}</Text>
                   <div className="mt-2">
                     <Button
                       type="primary"
-                      onClick={() => window.location.href = `/booking/${flight.id}?type=${price.type}`}
+                      onClick={() => window.location.href = `/booking/${flightDetail.id}/${flightSeat.id}`}
                     >
                       {t('flightDetail.select')}
                     </Button>
@@ -104,9 +112,9 @@ const FlightDetailPage: React.FC = () => {
         </Title>
         <div className="flex items-center justify-between py-8">
           <div className="flex-1 text-center">
-            <Text strong className="text-lg">{flight.departureCity}</Text>
+            <Text strong className="text-lg">{flightDetail.departureCity}</Text>
             <div className="text-sm text-gray-500">
-              {new Date(flight.departureTime).toLocaleTimeString()}
+              {new Date(flightDetail.departureTime).toLocaleTimeString()}
             </div>
           </div>
           <div className="flex-2 flex items-center justify-center">
@@ -115,15 +123,15 @@ const FlightDetailPage: React.FC = () => {
             <ArrowRightOutlined className="text-2xl ml-2" />
           </div>
           <div className="flex-1 text-center">
-            <Text strong className="text-lg">{flight.arrivalCity}</Text>
+            <Text strong className="text-lg">{flightDetail.arrivalCity}</Text>
             <div className="text-sm text-gray-500">
-              {new Date(flight.arrivalTime).toLocaleTimeString()}
+              {new Date(flightDetail.arrivalTime).toLocaleTimeString()}
             </div>
           </div>
         </div>
         <Divider />
         <div className="text-center">
-          <Text strong>{flight.duration}</Text>
+          <Text strong>{flightDetail.duration}</Text>
         </div>
       </Card>
     </div>

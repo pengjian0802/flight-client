@@ -2,8 +2,13 @@ import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosR
 
 // 创建 axios 实例
 const http: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api', // 替换为你的后端 API 基础 URL
-  timeout: 10000, // 请求超时时间
+  baseURL: 'http://localhost:8081/api',
+  timeout: 30000, // 请求超时时间
+  headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+  }
+
 });
 
 // 请求拦截器，添加 JWT 到请求头

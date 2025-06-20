@@ -21,6 +21,7 @@ const LoginPage: React.FC = () => {
       const token = response.data.token;
       localStorage.setItem('token', token);
       localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userId', response.data.user.id);
       message.success(t('login.success'));
       navigate('/');
     } catch (error) {
