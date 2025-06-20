@@ -16,7 +16,9 @@ COPY . .
 # 查看项目文件
 RUN ls -l
 
-# 以根用户身份构建应用
+RUN ls -l node_modules/.bin/
+
+# 构建应用
 RUN npm run build
 
 # 使用轻量级的 Node.js 运行时镜像
