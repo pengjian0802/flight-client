@@ -15,7 +15,7 @@ env:
   CONTAINER_NAME: flight-client-container    # 容器名称
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,49 +43,82 @@ jobs:
         env:
           CI: true
 
-      - name: Configure AWS
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-build
+          path: .
+          retention-days: 1  # 只保留1天，节省存储空间
+
+  docker-build-push:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: client-build
+          path: .
+
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login AWS ECR
+      - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build & Push Docker Image to ECR
-        id: build-image
+      - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          # IMAGE_TAG: ${{ github.sha }}
           IMAGE_TAG: latest
         run: |
-          # 构建 Docker 镜像
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          
-          # 推送镜像到 ECR
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          
-          # 输出镜像 URI 供后续步骤使用
           echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
+
+  deploy:
+    needs: docker-build-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: debug Image_URI
+        run: |
+          echo "IMG_URI: ${{ env.IMAGE_URI }}"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: TaskDefinition
         run: |
           aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} --query taskDefinition > task-definition.json
 
-      - name: Handle TaskDefinition
-        id: render-task-definition
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v2
         with:
           task-definition: task-definition.json
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ env.IMAGE_URI }}
 
-      - name: Deployed ECS
+      - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
-          task-definition: ${{ steps.render-task-definition.outputs.task-definition }}
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true    
+          wait-for-service-stability: true
