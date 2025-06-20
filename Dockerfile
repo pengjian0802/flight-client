@@ -1,5 +1,5 @@
-# 构建阶段
-FROM node:24-alpine AS builder
+# 使用官方 Node.js 运行时作为基础镜像
+FROM node:18-alpine as build
 
 # 设置工作目录
 WORKDIR /app
@@ -7,31 +7,29 @@ WORKDIR /app
 # 复制 package.json 和 package-lock.json
 COPY package*.json ./
 
-# 安装生产和开发依赖
-RUN npm install
+# 安装依赖
+RUN npm ci
 
 # 复制项目文件
 COPY . .
 
-# 执行构建命令
+# 构建应用
 RUN npm run build
 
-# 运行阶段
-FROM node:24-alpine
+# 使用轻量级的 Node.js 运行时镜像
+FROM node:18-alpine
 
 # 设置工作目录
 WORKDIR /app
 
-# 复制 package.json 和 package-lock.json
-COPY package*.json ./
+# 仅复制构建产物
+COPY --from=build /app/dist ./dist
 
-# 只安装生产依赖
+# 安装生产环境依赖（如果需要运行时依赖）
+COPY package*.json ./
 RUN npm install --production
 
-# 从构建阶段复制构建好的文件
-COPY --from=builder /app/dist ./dist
-
-# 暴露端口，根据你的 Vite 配置修改
+# 暴露应用端口
 EXPOSE 3000
 
 # 启动应用

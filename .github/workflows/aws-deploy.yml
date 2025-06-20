@@ -1,0 +1,91 @@
+name: AWS ECR & ECS Deployment
+
+on:
+  push:
+    branches:
+      - main  # 触发部署的分支
+
+env:
+  AWS_REGION: us-east-1                  # AWS 区域
+  ECR_REPOSITORY: jianpeng/flight-client     # ECR 仓库名称
+  ECS_SERVICE: pengjian-flight-client-service     # ECS 服务名称
+  ECS_CLUSTER: pengjian-flight-client-cluster     # ECS 集群名称
+  ECS_TASK_DEFINITION: task-definition.json  # 任务定义文件路径
+  IMAGE_URI: jianpeng/flight-client:latest
+  CONTAINER_NAME: flight-client-container    # 容器名称
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Config Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Cache Dependence 
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Setup Dependence
+        run: npm ci
+
+      - name: Setup App
+        run: npm run build
+        env:
+          CI: true
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build & Push Docker Image to ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          # IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: latest
+        run: |
+          # 构建 Docker 镜像
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          
+          # 推送镜像到 ECR
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          
+          # 输出镜像 URI 供后续步骤使用
+          echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: TaskDefinition
+        run: |
+          aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} --query taskDefinition > task-definition.json
+
+      - name: Handle TaskDefinition
+        id: render-task-definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v2
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ env.IMAGE_URI }}
+
+      - name: Deployed ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render-task-definition.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true    

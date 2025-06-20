@@ -1,0 +1,26 @@
+{
+  "family": "flight-client-task-definition",
+  "containerDefinitions": [
+    {
+      "name": "flight-client-container",
+      "image": "381492153714.dkr.ecr.us-east-1.amazonaws.com/jianpeng/flight-client:latest",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "memory": 512,
+      "cpu": 256,
+      "essential": true
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::381492153714:role/ecsTaskExecutionRole"
+}    
